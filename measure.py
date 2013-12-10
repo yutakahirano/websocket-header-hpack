@@ -21,39 +21,39 @@ class Frame:
 
     def headers1(self):
         o = {}
-        o[":opcode"] = str(self.opcode)
-        o[":fin"] = "1" if self.fin else "0"
-        rsv = ""
-        rsv += ("1" if self.rsv1 else "0")
-        rsv += (",1" if self.rsv2 else ",0")
-        rsv += (",1" if self.rsv3 else ",0")
-        if rsv != "0,0,0":
+        o[':opcode'] = str(self.opcode)
+        o[':fin'] = '1' if self.fin else '0'
+        rsv = ''
+        rsv += ('1' if self.rsv1 else '0')
+        rsv += (',1' if self.rsv2 else ',0')
+        rsv += (',1' if self.rsv3 else ',0')
+        if rsv != '0,0,0':
             o[':rsv'] = rsv
         
-        o[":length"] = str(self.length)
+        o[':length'] = str(self.length)
         return o
 
     def headers2(self):
         o = {}
         if self.opcode != 0:
-            o[":opcode"] = str(self.opcode)
+            o[':opcode'] = str(self.opcode)
         if self.fin:
-            o[":fin"] = "1"
+            o[':fin'] = '1'
         if self.rsv1:
-            o[":rsv1"] = "1"
+            o[':rsv1'] = '1'
         if self.rsv2:
-            o[":rsv2"] = "1"
+            o[':rsv2'] = '1'
         if self.rsv3:
-            o[":rsv3"] = "1"
-        o[":length"] = str(self.length)
+            o[':rsv3'] = '1'
+        o[':length'] = str(self.length)
         return o
 
     def headers3(self):
         o = {}
         if self.opcode != 0:
-            o[":opcode"] = str(self.opcode)
+            o[':opcode'] = str(self.opcode)
         if self.fin:
-            o[":fin"] = "1"
+            o[':fin'] = '1'
         if self.rsv1 or self.rsv2 or self.rsv3:
             rsv = 0
             if self.rsv1:
@@ -62,37 +62,37 @@ class Frame:
                 rsv += 2
             if self.rsv3:
                 rsv += 1
-            o[":rsv"] = str(rsv)
-        o[":length"] = str(self.length)
+            o[':rsv'] = str(rsv)
+        o[':length'] = str(self.length)
         return o
 
     def headers4(self):
         o = {}
         if self.opcode != 0:
-            o[":opcode"] = str(self.opcode)
+            o[':opcode'] = str(self.opcode)
         if self.fin:
-            o[":fin"] = "1"
+            o[':fin'] = '1'
         if self.rsv1:
-            o[":rsv1"] = "1"
+            o[':rsv1'] = '1'
         if self.rsv2:
-            o[":rsv2"] = "1"
+            o[':rsv2'] = '1'
         if self.rsv3:
-            o[":rsv3"] = "1"
-        o[":length"] = '{0:x}'.format(self.length)
+            o[':rsv3'] = '1'
+        o[':length'] = '{0:x}'.format(self.length)
         return o
 
     def headers5(self):
         o = {}
         if self.opcode != 0:
-            o[":opcode"] = str(self.opcode)
+            o[':opcode'] = str(self.opcode)
         if self.fin:
-            o[":fin"] = "1"
+            o[':fin'] = '1'
         if self.rsv1:
-            o[":rsv1"] = "1"
+            o[':rsv1'] = '1'
         if self.rsv2:
-            o[":rsv2"] = "1"
+            o[':rsv2'] = '1'
         if self.rsv3:
-            o[":rsv3"] = "1"
+            o[':rsv3'] = '1'
         return o
 
 def measure_for_frames(description, frames):
