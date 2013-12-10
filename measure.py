@@ -5,6 +5,7 @@ import random
 import sys
 from compressor.http2 import Processor
 
+
 class Frame:
     def __init__(self, opcode, fin, rsv1, rsv2, rsv3, length):
         self.opcode = opcode
@@ -29,7 +30,6 @@ class Frame:
         rsv += (',1' if self.rsv3 else ',0')
         if rsv != '0,0,0':
             o[':rsv'] = rsv
-        
         o[':length'] = str(self.length)
         return o
 
@@ -95,6 +95,7 @@ class Frame:
             o[':rsv3'] = '1'
         return o
 
+
 def measure_for_frames(description, frames):
     print('{0}: len(frames) = {1}'.format(description, len(frames)))
     p1 = Processor({}, True, {})
@@ -108,15 +109,20 @@ def measure_for_frames(description, frames):
     bytes4 = b''.join([p4.compress(f.headers4(), '') for f in frames])
     bytes5 = b''.join([p5.compress(f.headers5(), '') for f in frames])
     print('1: As specified in SPDY4 spec draft')
-    print('  len(bytes) = {0}, average = {1}'.format(len(bytes1), len(bytes1) * 1.0 / len(frames)))
+    print('  len(bytes) = {0}, average = {1}'.format(
+        len(bytes1), len(bytes1) * 1.0 / len(frames)))
     print('2: Omit headers when its value is zero')
-    print('  len(bytes) = {0}, average = {1}'.format(len(bytes2), len(bytes2) * 1.0 / len(frames)))
+    print('  len(bytes) = {0}, average = {1}'.format(
+        len(bytes2), len(bytes2) * 1.0 / len(frames)))
     print('3: 2 + assemble rsv headers')
-    print('  len(bytes) = {0}, average = {1}'.format(len(bytes3), len(bytes3) * 1.0 / len(frames)))
+    print('  len(bytes) = {0}, average = {1}'.format(
+        len(bytes3), len(bytes3) * 1.0 / len(frames)))
     print('4: 2 + hexadecimal length representation')
-    print('  len(bytes) = {0}, average = {1}'.format(len(bytes4), len(bytes4) * 1.0 / len(frames)))
+    print('  len(bytes) = {0}, average = {1}'.format(
+        len(bytes4), len(bytes4) * 1.0 / len(frames)))
     print('5: 2 + omit :length header')
-    print('  len(bytes) = {0}, average = {1}'.format(len(bytes5), len(bytes5) * 1.0 / len(frames)))
+    print('  len(bytes) = {0}, average = {1}'.format(
+        len(bytes5), len(bytes5) * 1.0 / len(frames)))
 
 frames = [
     Frame(Frame.TEXT, False, False, False, False, 1423),
@@ -283,5 +289,3 @@ measure_for_frames('rsv bits are turned randomly on', [
           random.random() < 0.2,
           f.length) for f in frames])
 print('')
-
-
